@@ -5,10 +5,13 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_server_url;
 
+const PORT = import.meta.env.VITE_server_url;
+
 class BookFormModal extends React.Component {
   constructor(props) {
     super(props);
   }
+
 
   handleCreate = async (book) => {
     console.log(book);
@@ -25,6 +28,14 @@ class BookFormModal extends React.Component {
       status: status.value,
     });
   }
+
+handleDelete = async (id) => {
+  await axios.delete(`${PORT}/books/${id}`);
+  this.setState({ books: this.state.books.filter(books => {
+    console.log(books._id);
+    return books._id !== id
+  })});
+}
 
   render() {
     return (
