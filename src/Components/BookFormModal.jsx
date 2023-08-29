@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-const PORT = import.meta.env.VITE_server_url;
+const PORT = import.meta.env.VITE_SERVER_URL;
 
 class BookFormModal extends React.Component {
   constructor(props) {
