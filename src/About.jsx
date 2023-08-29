@@ -4,8 +4,20 @@ class Profile extends Component {
 
   render() {
     /* TODO: render information about the developers */
-    return <p>Profile page coming soon</p>
-  }
+    return (
+        <>
+        <div>
+          <a href="https://github.com/cleecoloma">
+            Chesters GITHUB
+          </a>
+        </div>
+        <div>
+          <a href="https://github.com/Arkuris">
+            Davids GITHUB
+          </a>
+        </div>   
+        </>
+    )}
 }
 
 export default Profile;
