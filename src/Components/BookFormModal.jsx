@@ -3,10 +3,23 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+const PORT = import.meta.env.VITE_server_url;
+
 class BookFormModal extends React.Component {
   constructor(props) {
     super(props);
   }
+
+
+handleDelete = async (id) => {
+  await axios.delete(`${PORT}/books/${id}`);
+  this.setState({ books: this.state.books.filter(books => {
+    console.log(books._id);
+    return books._id !== id
+  })});
+}
+
+
 
   handleSubmit
 
