@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
 import BookFormModal from './BookFormModal';
+import { Button } from 'react-bootstrap';
 
 const PORT = import.meta.env.VITE_server_url;
 
@@ -10,12 +11,7 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       books: [],
-      book: {
-        title: null,
-        description: null,
-        status: null,
-      },
-      previewModalForm: false,
+      preview: false,
     };
   }
 
@@ -31,6 +27,10 @@ class BestBooks extends React.Component {
     this.setState({ preview: !this.state.preview });
   };
 
+  addNewBook = (book) => {
+    this.setState({ books: [this.state.books, book] });
+  };
+
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
   componentDidMount() {
     this.fetchAllBooks();
@@ -40,12 +40,15 @@ class BestBooks extends React.Component {
 
   render() {
     /* TODO: render all the books in a Carousel */
-    console.log(PORT);
+
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+        <Button variant="primary" onClick={this.toggleModal}>
+          Primary
+        </Button>
         <BookFormModal
-          book={this.state.book}
+          addNewBook={this.state.addNewBook}
           toggleModal={this.toggleModal}
           preview={this.state.preview}
         />
