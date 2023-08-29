@@ -52,7 +52,7 @@ class BestBooks extends React.Component {
     /* TODO: render all the books in a Carousel */
 
     return (
-      <div style={{ margin: '0 40rem' }}>
+      <div style={{ margin: '0 20rem' }}>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
         <Button variant="primary" onClick={this.toggleModal}>
           Add a Book
