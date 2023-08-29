@@ -36,6 +36,14 @@ class BestBooks extends React.Component {
     this.fetchAllBooks();
   }
 
+  handleDelete = async (id) => {
+    await axios.delete(`${PORT}/books/${id}`);
+    this.setState({ books: this.state.books.filter(books => {
+      console.log(books._id);
+      return books._id !== id
+    })});
+  }
+
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
 
   render() {
@@ -47,6 +55,7 @@ class BestBooks extends React.Component {
         <Button variant="primary" onClick={this.toggleModal}>
           Add a Book
         </Button>
+
         <BookFormModal
           addNewBook={this.addNewBook}
           toggleModal={this.toggleModal}
@@ -64,8 +73,13 @@ class BestBooks extends React.Component {
                 <Carousel.Caption style={{ backgroundColor: 'black' }}>
                   <h3>{books.title}</h3>
                   <p>{books.description}</p>
-                  <p>Available? {(JSON.parse(books.status)) ? 'Yes' : 'No'
-                  }</p>
+                  <p>Available? {JSON.parse(books.status) ? 'Yes' : 'No'}</p>
+                  <Button
+                    variant="warning"
+                    onClick={this.handleDelete(books._id)}
+                  >
+                    Delete Book!
+                  </Button>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
