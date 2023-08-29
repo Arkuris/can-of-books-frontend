@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
 import BookFormModal from './BookFormModal';
+import { Button } from 'react-bootstrap';
 
 const PORT = import.meta.env.VITE_server_url;
 
@@ -10,12 +11,7 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       books: [],
-      book: {
-        title: null,
-        description: null,
-        status: null,
-      },
-      previewModalForm: false,
+      preview: false,
     };
   }
 
@@ -31,21 +27,37 @@ class BestBooks extends React.Component {
     this.setState({ preview: !this.state.preview });
   };
 
+  addNewBook = (book) => {
+    this.setState({ books: [...this.state.books, book] });
+  };
+
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
   componentDidMount() {
     this.fetchAllBooks();
+  }
+
+  handleDelete = async (id) => {
+    await axios.delete(`${PORT}/books/${id}`);
+    this.setState({ books: this.state.books.filter(books => {
+      console.log(books._id);
+      return books._id !== id
+    })});
   }
 
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
 
   render() {
     /* TODO: render all the books in a Carousel */
-    console.log(PORT);
+
     return (
-      <>
+      <div style={{ margin: '0 40rem' }}>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+        <Button variant="primary" onClick={this.toggleModal}>
+          Add a Book
+        </Button>
+
         <BookFormModal
-          book={this.state.book}
+          addNewBook={this.addNewBook}
           toggleModal={this.toggleModal}
           preview={this.state.preview}
         />
@@ -61,7 +73,13 @@ class BestBooks extends React.Component {
                 <Carousel.Caption style={{ backgroundColor: 'black' }}>
                   <h3>{books.title}</h3>
                   <p>{books.description}</p>
-                  <p>Available? {books.status}</p>
+                  <p>Available? {JSON.parse(books.status) ? 'Yes' : 'No'}</p>
+                  <Button
+                    variant="warning"
+                    onClick={this.handleDelete(books._id)}
+                  >
+                    Delete Book!
+                  </Button>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
@@ -69,7 +87,7 @@ class BestBooks extends React.Component {
         ) : (
           <h3>No Books Found :</h3>
         )}
-      </>
+      </div>
     );
   }
 }
