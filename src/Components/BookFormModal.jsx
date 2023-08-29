@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 
-const SERVER_URL = import.meta.env.VITE_server_url;
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const PORT = import.meta.env.VITE_server_url;
 

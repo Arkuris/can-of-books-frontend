@@ -4,7 +4,7 @@ import axios from 'axios';
 import BookFormModal from './BookFormModal';
 import { Button } from 'react-bootstrap';
 
-const PORT = import.meta.env.VITE_server_url;
+const PORT = import.meta.env.VITE_SERVER_URL;
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -38,11 +38,13 @@ class BestBooks extends React.Component {
 
   handleDelete = async (id) => {
     await axios.delete(`${PORT}/books/${id}`);
-    this.setState({ books: this.state.books.filter(books => {
-      console.log(books._id);
-      return books._id !== id
-    })});
-  }
+    this.setState({
+      books: this.state.books.filter((books) => {
+        console.log(books._id);
+        return books._id !== id;
+      }),
+    });
+  };
 
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
 
@@ -76,7 +78,7 @@ class BestBooks extends React.Component {
                   <p>Available? {JSON.parse(books.status) ? 'Yes' : 'No'}</p>
                   <Button
                     variant="warning"
-                    onClick={this.handleDelete(books._id)}
+                    onClick={() => this.handleDelete(books._id)}
                   >
                     Delete Book!
                   </Button>
