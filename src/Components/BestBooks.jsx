@@ -3,18 +3,18 @@ import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
 import BookFormModal from './BookFormModal';
 
-
 const PORT = import.meta.env.VITE_server_url;
-
 
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       books: [],
-      title: null,
-      description: null,
-      status: null,
+      book: {
+        title: null,
+        description: null,
+        status: null,
+      },
       previewModalForm: false,
     };
   }
@@ -44,7 +44,11 @@ class BestBooks extends React.Component {
     return (
       <>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        <BookFormModal toggleModal={this.toggleModal} preview={this.state.preview}/>
+        <BookFormModal
+          book={this.state.book}
+          toggleModal={this.toggleModal}
+          preview={this.state.preview}
+        />
         {this.state.books.length ? (
           <Carousel>
             {this.state.books.map((books, idx) => (
