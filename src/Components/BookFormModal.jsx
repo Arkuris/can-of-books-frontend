@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-// import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_server_url;
@@ -12,6 +11,7 @@ class BookFormModal extends React.Component {
   }
 
   handleCreate = async (book) => {
+    console.log(book);
     let response = await axios.post(`${SERVER_URL}/books`, book);
     this.props.addNewBook(response.data)
   }
@@ -19,7 +19,6 @@ class BookFormModal extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { title, description, status } = e.target;
-    console.log(title + description + status)
     this.handleCreate({
       title: title.value,
       description: description.value,
@@ -41,8 +40,9 @@ class BookFormModal extends React.Component {
             <form onSubmit={this.handleSubmit}>
               <input type="text" name="title" />
               <input type="text" name="description" />
-              <input type="checkbox" name="status" />
-              <button type="submit">Create Pokemon!</button>
+              <input type="radio" name="status" value="true" />
+              <input type="radio" name="status" value="false" />
+              <button type="submit">Add</button>
             </form>
           </Modal.Body>
           <Modal.Footer>

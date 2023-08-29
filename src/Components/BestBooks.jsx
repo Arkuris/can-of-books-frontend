@@ -28,7 +28,7 @@ class BestBooks extends React.Component {
   };
 
   addNewBook = (book) => {
-    this.setState({ books: [this.state.books, book] });
+    this.setState({ books: [...this.state.books, book] });
   };
 
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
@@ -42,13 +42,13 @@ class BestBooks extends React.Component {
     /* TODO: render all the books in a Carousel */
 
     return (
-      <>
+      <div style={{ margin: '0 40rem' }}>
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
         <Button variant="primary" onClick={this.toggleModal}>
-          Primary
+          Add a Book
         </Button>
         <BookFormModal
-          addNewBook={this.state.addNewBook}
+          addNewBook={this.addNewBook}
           toggleModal={this.toggleModal}
           preview={this.state.preview}
         />
@@ -64,7 +64,8 @@ class BestBooks extends React.Component {
                 <Carousel.Caption style={{ backgroundColor: 'black' }}>
                   <h3>{books.title}</h3>
                   <p>{books.description}</p>
-                  <p>Available? {books.status}</p>
+                  <p>Available? {(JSON.parse(books.status)) ? 'Yes' : 'No'
+                  }</p>
                 </Carousel.Caption>
               </Carousel.Item>
             ))}
@@ -72,7 +73,7 @@ class BestBooks extends React.Component {
         ) : (
           <h3>No Books Found :</h3>
         )}
-      </>
+      </div>
     );
   }
 }
