@@ -14,7 +14,7 @@ class BestBooks extends React.Component {
       books: [],
       preview: false,
       editPreview: false,
-      editBook: {},
+      editBook: [],
     };
   }
 
@@ -31,7 +31,7 @@ class BestBooks extends React.Component {
   };
 
   toggleEditModal = () => {
-    this.setState({ editPreview: !this.state.editPreview, editBook: {} });
+    this.setState({ editPreview: !this.state.editPreview});
   };
 
   addNewBook = (book) => {
@@ -39,7 +39,7 @@ class BestBooks extends React.Component {
   };
 
   editBook = (updatedBook) => {
-    let replacementIndex = idx;
+    let replacementIndex = null;
     this.state.books.forEach((book, idx) => {
       if (book._id === updatedBook._id) {
         replacementIndex = idx;
@@ -72,7 +72,7 @@ class BestBooks extends React.Component {
   };
 
   handleEditModal = (book) => {
-    // console.log(book);
+    console.log(book);
     this.setState({ editPreview: !this.state.editPreview, editBook: book });
   };
 

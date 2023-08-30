@@ -6,16 +6,15 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-// const PORT = import.meta.env.VITE_SERVER_URL;
-
 class EditBookFormModal extends React.Component {
   constructor(props) {
     super(props);
   }
 
   handleCreate = async (book) => {
-    console.log(book);
-    let response = await axios.put(`${SERVER_URL}/books/${this.props.editBook._id}`, book);
+    console.log(this.props.editBook);
+    let id = this.props.editBook;
+    let response = await axios.put(`${SERVER_URL}/books/${id}`, book);
     let updatedBook = response.data;
     this.props.editBook(updatedBook);
   };
@@ -32,7 +31,6 @@ class EditBookFormModal extends React.Component {
 
 
   render() {
-    console.log()
     return (
       <>
         <Modal
