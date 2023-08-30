@@ -1,7 +1,7 @@
 # Reincarnated in Another World as a Book in a Library.  
 
 **Author**: David Danilchik, Chester Coloma
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.1.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
@@ -19,17 +19,35 @@
 
 ## Estimates
 <!-- See below -->
+Name of feature: 
+> Lab 11 Book Component.
+
+Estimate of time needed to complete: 
+> 4 1/2 hours.
+
+Start time: 
+> 1330
+
+Finish time: 
+> 1730
+
+Actual time needed to complete: 
+> 4 hours.
+
+Name of feature: 
+> Create and Delete
+
+Estimate of time needed to complete: 
+> 2 hours
+
+Start time:
+> 1:00pm
+
+Finish time:
+> 4:30pm
+
+Actual time needed to complete:
+> 3.5 hours
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
-
-
-Name of feature: Lab 11 Book Component.
-
-Estimate of time needed to complete: 4 1/2 hours.
-
-Start time: 1330
-
-Finish time: 1730
-
-Actual time needed to complete: 4 hours.
