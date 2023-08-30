@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -49,7 +50,7 @@ class BookFormModal extends React.Component {
             Add a New Book
           </Modal.Header>
           <Modal.Body style={{ width: '500px' }}>
-            <form
+            {/* <form
               onSubmit={this.handleSubmit}
               style={{
                 display: 'flex',
@@ -94,7 +95,63 @@ class BookFormModal extends React.Component {
               >
                 Add
               </button>
-            </form>
+            </form> */}
+            <Form
+              onSubmit={this.handleSubmit}
+              className="d-flex flex-column align-items-center"
+            >
+              <Form.Group
+                style={{ marginBottom: '30px' }}
+                className="text-center"
+              >
+                <Form.Label className="text-center">Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  style={{ marginTop: '5px', padding: '5px' }}
+                />
+              </Form.Group>
+              <Form.Group
+                style={{ marginBottom: '0px' }}
+                className="text-center"
+              >
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  style={{ marginTop: '5px', padding: '5px' }}
+                />
+              </Form.Group>
+              <div className="d-flex flex-column mb-3">
+                <Form.Label className="text-center">Available</Form.Label>
+                <div className="d-flex flex-row mb-3">
+                  <Form.Check
+                    type="radio"
+                    name="status"
+                    value="true"
+                    label="True"
+                    style={{ marginRight: '10px' }}
+                  />
+                  <Form.Check
+                    type="radio"
+                    name="status"
+                    value="false"
+                    label="False"
+                  />
+                </div>
+              </div>
+              <Button
+                onClick={() => this.props.toggleModal()}
+                type="submit"
+                variant="primary"
+                style={{
+                  padding: '8px 15px',
+                  borderRadius: '4px',
+                }}
+              >
+                Add
+              </Button>
+            </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={() => this.props.toggleModal()}>
