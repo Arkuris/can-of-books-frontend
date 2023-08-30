@@ -6,7 +6,7 @@ class Footer extends React.Component {
     return (
       <Navbar
         style={{
-          position: 'fixed',
+          position: 'relative',
           bottom: '0',
           width: '100%',
           textAlign: 'center',

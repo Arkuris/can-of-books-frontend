@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
 import BookFormModal from './BookFormModal';
+import EditBookFormModal from './EditBookFormModal';
 import { Button } from 'react-bootstrap';
 
 const PORT = import.meta.env.VITE_SERVER_URL;
@@ -12,6 +13,8 @@ class BestBooks extends React.Component {
     this.state = {
       books: [],
       preview: false,
+      editPreview: false,
+      editBook: {},
     };
   }
 
@@ -27,8 +30,30 @@ class BestBooks extends React.Component {
     this.setState({ preview: !this.state.preview });
   };
 
+  toggleEditModal = () => {
+    this.setState({ editPreview: !this.state.editPreview, editBook: {} });
+  };
+
   addNewBook = (book) => {
     this.setState({ books: [...this.state.books, book] });
+  };
+
+  editBook = (updatedBook) => {
+    let replacementIndex = idx;
+    this.state.books.forEach((book, idx) => {
+      if (book._id === updatedBook._id) {
+        replacementIndex = idx;
+      }
+    });
+    this.setState({
+      books: this.state.book.map((book, idx) => {
+        if (idx === replacementIndex) {
+          return updatedBook;
+        } else {
+          return book;
+        }
+      })
+    })
   };
 
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
@@ -46,16 +71,17 @@ class BestBooks extends React.Component {
     });
   };
 
-  /* TODO: Make a GET request to your API to fetch all the books from the database  */
+  handleEditModal = (book) => {
+    // console.log(book);
+    this.setState({ editPreview: !this.state.editPreview, editBook: book });
+  };
 
   render() {
-    /* TODO: render all the books in a Carousel */
-
     return (
       <div>
         <div
           style={{
-            margin: '0 20rem',
+            margin: '2rem 20rem',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -71,8 +97,14 @@ class BestBooks extends React.Component {
           toggleModal={this.toggleModal}
           preview={this.state.preview}
         />
+        <EditBookFormModal
+          handleUpdate={this.handleUpdate}
+          toggleEditModal={this.handleEditModal}
+          editPreview={this.state.editPreview}
+          editBook={this.state.editBook}
+        />
         {this.state.books.length ? (
-          <Carousel style={{margin: '1rem 20%'}}>
+          <Carousel style={{ margin: '1rem 20%' }}>
             {this.state.books.map((books, idx) => (
               <Carousel.Item key={idx}>
                 <img
@@ -85,10 +117,17 @@ class BestBooks extends React.Component {
                   <p>{books.description}</p>
                   <p>Available? {JSON.parse(books.status) ? 'Yes' : 'No'}</p>
                   <Button
-                    variant="warning"
+                    variant="secondary"
+                    onClick={() => this.handleEditModal(books)}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    className="mx-2"
+                    variant="danger"
                     onClick={() => this.handleDelete(books._id)}
                   >
-                    Delete Book!
+                    Delete
                   </Button>
                 </Carousel.Caption>
               </Carousel.Item>

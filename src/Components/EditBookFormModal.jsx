@@ -8,15 +8,16 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 // const PORT = import.meta.env.VITE_SERVER_URL;
 
-class BookFormModal extends React.Component {
+class EditBookFormModal extends React.Component {
   constructor(props) {
     super(props);
   }
 
   handleCreate = async (book) => {
     console.log(book);
-    let response = await axios.post(`${SERVER_URL}/books`, book);
-    this.props.addNewBook(response.data);
+    let response = await axios.put(`${SERVER_URL}/books/${this.props.editBook._id}`, book);
+    let updatedBook = response.data;
+    this.props.editBook(updatedBook);
   };
 
   handleSubmit = (e) => {
@@ -29,15 +30,20 @@ class BookFormModal extends React.Component {
     });
   };
 
+
   render() {
+    console.log()
     return (
       <>
-        <Modal show={this.props.preview} onHide={this.props.toggleModal}>
+        <Modal
+          show={this.props.editPreview}
+          onHide={this.props.toggleEditModal}
+        >
           <Modal.Header
             style={{ fontSize: '150%', fontWeight: 'bold' }}
             closeButton
           >
-            Add a New Book
+            Edit Book
           </Modal.Header>
           <Modal.Body style={{ width: '500px' }}>
             <Form
@@ -52,6 +58,9 @@ class BookFormModal extends React.Component {
                 <Form.Control
                   type="text"
                   name="title"
+                  placeholder={
+                    this.props.editBook ? this.props.editBook.title : null
+                  }
                   style={{ marginTop: '5px', padding: '5px' }}
                 />
               </Form.Group>
@@ -63,6 +72,9 @@ class BookFormModal extends React.Component {
                 <Form.Control
                   type="text"
                   name="description"
+                  placeholder={
+                    this.props.editBook ? this.props.editBook.description : null
+                  }
                   style={{ marginTop: '5px', padding: '5px' }}
                 />
               </Form.Group>
@@ -85,7 +97,7 @@ class BookFormModal extends React.Component {
                 </div>
               </div>
               <Button
-                onClick={() => this.props.toggleModal()}
+                onClick={() => this.props.toggleEditModal()}
                 type="submit"
                 variant="primary"
                 style={{
@@ -98,7 +110,10 @@ class BookFormModal extends React.Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={() => this.props.toggleModal()}>
+            <Button
+              variant="primary"
+              onClick={() => this.props.toggleEditModal()}
+            >
               Close
             </Button>
           </Modal.Footer>
@@ -108,4 +123,4 @@ class BookFormModal extends React.Component {
   }
 }
 
-export default BookFormModal;
+export default EditBookFormModal;
