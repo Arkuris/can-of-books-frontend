@@ -1,0 +1,10 @@
+.centered-container {
+  display: flex;
+  justify-content: center; /* Horizontally center items */
+  align-items: center; /* Vertically center items */
+  height: 100vh; /* Set container height to full viewport height */
+}
+
+.card {
+  margin: 0 1rem;
+}

@@ -4,10 +4,20 @@ import Navbar from 'react-bootstrap/Navbar';
 class Footer extends React.Component {
   render() {
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar
+        style={{
+          position: 'fixed',
+          bottom: '0',
+          width: '100%',
+          textAlign: 'center',
+          background: '#343a40',
+          justifyContent: 'center'
+        }}
+        variant="dark"
+      >
         <Navbar.Brand>Code Fellows</Navbar.Brand>
       </Navbar>
-    )
+    );
   }
 }
 
