@@ -52,19 +52,27 @@ class BestBooks extends React.Component {
     /* TODO: render all the books in a Carousel */
 
     return (
-      <div style={{ margin: '0 20rem' }}>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-        <Button variant="primary" onClick={this.toggleModal}>
-          Add a Book
-        </Button>
-
+      <div>
+        <div
+          style={{
+            margin: '0 20rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+          <Button variant="primary" onClick={this.toggleModal}>
+            Add a Book
+          </Button>
+        </div>
         <BookFormModal
           addNewBook={this.addNewBook}
           toggleModal={this.toggleModal}
           preview={this.state.preview}
         />
         {this.state.books.length ? (
-          <Carousel>
+          <Carousel style={{margin: '1rem 20%'}}>
             {this.state.books.map((books, idx) => (
               <Carousel.Item key={idx}>
                 <img
