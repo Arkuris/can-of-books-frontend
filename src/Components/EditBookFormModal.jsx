@@ -12,11 +12,12 @@ class EditBookFormModal extends React.Component {
   }
 
   handleCreate = async (book) => {
-    console.log(this.props.editBook);
-    let id = this.props.editBook;
-    let response = await axios.put(`${SERVER_URL}/books/${id}`, book);
+    let response = await axios.put(
+      `${SERVER_URL}/books/${this.props.editBook._id}`,
+      book
+    );
     let updatedBook = response.data;
-    this.props.editBook(updatedBook);
+    this.props.handleEditBook(updatedBook);
   };
 
   handleSubmit = (e) => {
@@ -31,6 +32,7 @@ class EditBookFormModal extends React.Component {
 
 
   render() {
+    console.log(this.props.editBook);
     return (
       <>
         <Modal
@@ -54,6 +56,7 @@ class EditBookFormModal extends React.Component {
               >
                 <Form.Label className="text-center">Title</Form.Label>
                 <Form.Control
+                  id={this.props.editBook ? this.props.editBook.title : null}
                   type="text"
                   name="title"
                   placeholder={
@@ -95,7 +98,6 @@ class EditBookFormModal extends React.Component {
                 </div>
               </div>
               <Button
-                onClick={() => this.props.toggleEditModal()}
                 type="submit"
                 variant="primary"
                 style={{
@@ -103,7 +105,7 @@ class EditBookFormModal extends React.Component {
                   borderRadius: '4px',
                 }}
               >
-                Add
+                Edit
               </Button>
             </Form>
           </Modal.Body>

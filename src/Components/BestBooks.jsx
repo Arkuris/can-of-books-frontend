@@ -14,7 +14,7 @@ class BestBooks extends React.Component {
       books: [],
       preview: false,
       editPreview: false,
-      editBook: [],
+      editBook: null,
     };
   }
 
@@ -31,14 +31,14 @@ class BestBooks extends React.Component {
   };
 
   toggleEditModal = () => {
-    this.setState({ editPreview: !this.state.editPreview});
+    this.setState({ editPreview: !this.state.editPreview });
   };
 
   addNewBook = (book) => {
     this.setState({ books: [...this.state.books, book] });
   };
 
-  editBook = (updatedBook) => {
+  handleEditBook = (updatedBook) => {
     let replacementIndex = null;
     this.state.books.forEach((book, idx) => {
       if (book._id === updatedBook._id) {
@@ -46,14 +46,14 @@ class BestBooks extends React.Component {
       }
     });
     this.setState({
-      books: this.state.book.map((book, idx) => {
+      books: this.state.books.map((book, idx) => {
         if (idx === replacementIndex) {
           return updatedBook;
         } else {
           return book;
         }
-      })
-    })
+      }),
+    });
   };
 
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
@@ -73,7 +73,11 @@ class BestBooks extends React.Component {
 
   handleEditModal = (book) => {
     console.log(book);
-    this.setState({ editPreview: !this.state.editPreview, editBook: book });
+    console.log(this.state.editBook);
+    this.setState({ 
+      editPreview: !this.state.editPreview,
+      editBook: book
+    });
   };
 
   render() {
@@ -97,12 +101,6 @@ class BestBooks extends React.Component {
           toggleModal={this.toggleModal}
           preview={this.state.preview}
         />
-        <EditBookFormModal
-          handleUpdate={this.handleUpdate}
-          toggleEditModal={this.handleEditModal}
-          editPreview={this.state.editPreview}
-          editBook={this.state.editBook}
-        />
         {this.state.books.length ? (
           <Carousel style={{ margin: '1rem 20%' }}>
             {this.state.books.map((books, idx) => (
@@ -122,6 +120,13 @@ class BestBooks extends React.Component {
                   >
                     Update
                   </Button>
+                  <EditBookFormModal
+                    handleUpdate={this.handleUpdate}
+                    toggleEditModal={this.handleEditModal}
+                    editPreview={this.state.editPreview}
+                    handleEditBook={this.handleEditBook}
+                    editBook={this.state.editBook}
+                  />
                   <Button
                     className="mx-2"
                     variant="danger"
