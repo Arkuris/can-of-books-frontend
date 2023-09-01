@@ -74,9 +74,6 @@ class BestBooks extends React.Component {
     let res = await this.props.auth0.getIdTokenClaims();
     console.log(res);
     const token = res.__raw;
-    const user = res;
-    console.log('OUR WEB TOKEN', token);
-    console.log('OUR WEB USER', user);
     this.setState({ token: token }, () => this.fetchAllBooks());
     this.props.handleProfilePage(res);
   }
