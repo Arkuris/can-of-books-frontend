@@ -28,7 +28,7 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <Header />
+          <Header user={this.state.user} />
           <Routes>
             <Route
               exact

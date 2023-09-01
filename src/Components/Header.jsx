@@ -30,11 +30,12 @@ class Header extends React.Component {
             About
           </Link>
         </NavItem>
-        <NavItem style={{ color: 'white', marginRight: '10px' }}>
+        { this.props.user ? <NavItem style={{ color: 'white', marginRight: '10px' }}>
           <Link to="/Profile" className="nav-link">
             Profile
           </Link>
         </NavItem>
+         : null}
         <AuthButtons />
       </Navbar>
     );
