@@ -17,6 +17,7 @@ class BestBooks extends React.Component {
       editPreview: false,
       editBook: null,
       editMessage: false,
+      token: null,
     };
   }
 
@@ -60,8 +61,20 @@ class BestBooks extends React.Component {
   };
 
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
-  componentDidMount() {
+  async componentDidMount() {
+    let res = await this.props.auth0.getIdTokenClaims();
+    const token = res.__raw;
+    console.log('OUR WEB TOKEN', token);
+    this.setState({ token})
     this.fetchAllBooks();
+
+    // make a request with token
+    const config = {
+      header: {
+        'Authorization':  `Bearer ${token}`
+      },
+      
+    }
   }
 
   handleDelete = async (id) => {
