@@ -4,6 +4,7 @@ import axios from 'axios';
 import BookFormModal from './BookFormModal';
 import EditBookFormModal from './EditBookFormModal';
 import { Button } from 'react-bootstrap';
+import { withAuth0 } from '@auth0/auth0-react';
 
 const PORT = import.meta.env.VITE_SERVER_URL;
 
@@ -148,4 +149,6 @@ class BestBooks extends React.Component {
   }
 }
 
-export default BestBooks;
+const AuthBestBooks = withAuth0(BestBooks);
+
+export default AuthBestBooks;
