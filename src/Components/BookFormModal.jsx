@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const PORT = import.meta.env.VITE_SERVER_URL;
 
 // const PORT = import.meta.env.VITE_SERVER_URL;
 
@@ -19,7 +19,7 @@ class BookFormModal extends React.Component {
         Authorization: `Bearer ${this.props.token}`,
       },
       method: 'POST',
-      baseURL: 'http://localhost:3001/',
+      baseURL: `${PORT}`,
       url: '/books',
       data: book,
     };

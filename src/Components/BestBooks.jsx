@@ -29,7 +29,7 @@ class BestBooks extends React.Component {
         Authorization: `Bearer ${this.state.token}`,
       },
       method: 'GET',
-      baseURL: 'http://localhost:3001',
+      baseURL: `${PORT}`,
       url: '/books',
     };
     axios(config).then((response) => {
@@ -85,7 +85,7 @@ class BestBooks extends React.Component {
         Authorization: `Bearer ${this.state.token}`,
       },
       method: 'DELETE',
-      baseURL: 'http://localhost:3001/',
+      baseURL: `${PORT}`,
       url: `/books/${id}`,
     };
     axios(config);
