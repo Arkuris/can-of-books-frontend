@@ -74,18 +74,19 @@ class BestBooks extends React.Component {
     const token = res.__raw;
     console.log('OUR WEB TOKEN', token);
     this.setState({ token }, () => this.fetchAllBooks());
-    // ;
-
-    // make a request with token
-    
-
-    // const bookResponse = await axios(config);
-
-    // console.log(bookResponse);
   }
 
   handleDelete = async (id) => {
-    await axios.delete(`${PORT}/books/${id}`);
+    console.log('reaching to server');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${this.state.token}`,
+      },
+      method: 'DELETE',
+      baseURL: 'http://localhost:3001/',
+      url: `/books/${id}`,
+    };
+    axios(config); 
     this.setState({
       books: this.state.books.filter((books) => {
         console.log(books._id);
@@ -120,6 +121,7 @@ class BestBooks extends React.Component {
           </Button>
         </div>
         <BookFormModal
+          token={this.state.token}
           addNewBook={this.addNewBook}
           toggleModal={this.toggleModal}
           preview={this.state.preview}
@@ -149,6 +151,7 @@ class BestBooks extends React.Component {
                     editPreview={this.state.editPreview}
                     handleEditBook={this.handleEditBook}
                     editBook={this.state.editBook}
+                    token={this.state.token}
                   />
                   <Button
                     className="mx-2"

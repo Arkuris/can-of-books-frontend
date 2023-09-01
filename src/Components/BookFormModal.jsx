@@ -13,10 +13,20 @@ class BookFormModal extends React.Component {
     super(props);
   }
 
-  handleCreate = async (book) => {
+  handleCreate = (book) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${this.props.token}`,
+      },
+      method: 'POST',
+      baseURL: 'http://localhost:3001/',
+      url: '/books',
+      data: book,
+    };
     console.log(book);
-    let response = await axios.post(`${SERVER_URL}/books`, book);
-    this.props.addNewBook(response.data);
+    axios(config).then((response) => {
+      this.props.addNewBook(response.data);
+    });
   };
 
   handleSubmit = (e) => {
