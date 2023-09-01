@@ -11,13 +11,20 @@ class EditBookFormModal extends React.Component {
     super(props);
   }
 
-  handleCreate = async (book) => {
-    let response = await axios.put(
-      `${SERVER_URL}/books/${this.props.editBook._id}`,
-      book
-    );
-    let updatedBook = response.data;
-    this.props.handleEditBook(updatedBook);
+  handleCreate = (book) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${this.props.token}`,
+      },
+      method: 'PUT',
+      baseURL: 'http://localhost:3001/',
+      url:`/books/${this.props.editBook._id}`,
+      data: book,
+    };
+    console.log(book);
+    axios(config).then((response) => {
+      this.props.handleEditBook(response.data)
+    })
   };
 
   handleSubmit = (e) => {

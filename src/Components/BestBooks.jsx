@@ -4,6 +4,7 @@ import axios from 'axios';
 import BookFormModal from './BookFormModal';
 import EditBookFormModal from './EditBookFormModal';
 import { Button } from 'react-bootstrap';
+import { withAuth0 } from '@auth0/auth0-react';
 
 const PORT = import.meta.env.VITE_SERVER_URL;
 
@@ -16,12 +17,22 @@ class BestBooks extends React.Component {
       editPreview: false,
       editBook: null,
       editMessage: false,
+      token: null,
+      // user: null,
     };
   }
 
   fetchAllBooks = () => {
     console.log('reaching to server');
-    axios.get(`${PORT}/books`).then((response) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${this.state.token}`,
+      },
+      method: 'GET',
+      baseURL: 'http://localhost:3001',
+      url: '/books',
+    };
+    axios(config).then((response) => {
       this.setState({ books: response.data });
       console.log(response.data);
     });
@@ -59,12 +70,28 @@ class BestBooks extends React.Component {
   };
 
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
-  componentDidMount() {
-    this.fetchAllBooks();
+  async componentDidMount() {
+    let res = await this.props.auth0.getIdTokenClaims();
+    console.log(res);
+    const token = res.__raw;
+    const user = res;
+    console.log('OUR WEB TOKEN', token);
+    console.log('OUR WEB USER', user);
+    this.setState({ token: token }, () => this.fetchAllBooks());
+    this.props.handleProfilePage(res);
   }
 
   handleDelete = async (id) => {
-    await axios.delete(`${PORT}/books/${id}`);
+    console.log('reaching to server');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${this.state.token}`,
+      },
+      method: 'DELETE',
+      baseURL: 'http://localhost:3001/',
+      url: `/books/${id}`,
+    };
+    axios(config);
     this.setState({
       books: this.state.books.filter((books) => {
         console.log(books._id);
@@ -99,6 +126,7 @@ class BestBooks extends React.Component {
           </Button>
         </div>
         <BookFormModal
+          token={this.state.token}
           addNewBook={this.addNewBook}
           toggleModal={this.toggleModal}
           preview={this.state.preview}
@@ -128,6 +156,7 @@ class BestBooks extends React.Component {
                     editPreview={this.state.editPreview}
                     handleEditBook={this.handleEditBook}
                     editBook={this.state.editBook}
+                    token={this.state.token}
                   />
                   <Button
                     className="mx-2"
@@ -148,4 +177,6 @@ class BestBooks extends React.Component {
   }
 }
 
-export default BestBooks;
+const AuthBestBooks = withAuth0(BestBooks);
+
+export default AuthBestBooks;
