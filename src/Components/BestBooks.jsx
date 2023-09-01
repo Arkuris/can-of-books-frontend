@@ -65,16 +65,22 @@ class BestBooks extends React.Component {
     let res = await this.props.auth0.getIdTokenClaims();
     const token = res.__raw;
     console.log('OUR WEB TOKEN', token);
-    this.setState({ token})
-    this.fetchAllBooks();
+    this.setState({ token })
+    // this.fetchAllBooks();
 
     // make a request with token
     const config = {
       header: {
-        'Authorization':  `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      
-    }
+      method: 'GET',
+      baseURL: 'http://localhost:3001',
+      url: '/books',
+    };
+
+    const bookResponse = await axios(config);
+
+    console.log(bookResponse);
   }
 
   handleDelete = async (id) => {
