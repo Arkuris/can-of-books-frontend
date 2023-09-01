@@ -23,16 +23,18 @@ class EditBookFormModal extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { title, description, status } = e.target;
-    this.handleCreate({
-      title: title.value,
-      description: description.value,
-      status: status.value,
-    });
+    if (title && description && status) {
+      this.handleCreate({
+        title: title.value,
+        description: description.value,
+        status: status.value,
+      });
+      this.props.toggleEditModal();
+    }
   };
 
-
   render() {
-    console.log(this.props.editBook);
+    // console.log(this.props.editBook);
     return (
       <>
         <Modal
@@ -63,6 +65,7 @@ class EditBookFormModal extends React.Component {
                     this.props.editBook ? this.props.editBook.title : null
                   }
                   style={{ marginTop: '5px', padding: '5px' }}
+                  required
                 />
               </Form.Group>
               <Form.Group
@@ -77,6 +80,7 @@ class EditBookFormModal extends React.Component {
                     this.props.editBook ? this.props.editBook.description : null
                   }
                   style={{ marginTop: '5px', padding: '5px' }}
+                  required
                 />
               </Form.Group>
               <div className="d-flex flex-column mb-3">
@@ -88,12 +92,14 @@ class EditBookFormModal extends React.Component {
                     value="true"
                     label="True"
                     style={{ marginRight: '10px' }}
+                    required
                   />
                   <Form.Check
                     type="radio"
                     name="status"
                     value="false"
                     label="False"
+                    required
                   />
                 </div>
               </div>

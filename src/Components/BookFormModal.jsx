@@ -22,11 +22,14 @@ class BookFormModal extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     let { title, description, status } = e.target;
-    this.handleCreate({
-      title: title.value,
-      description: description.value,
-      status: status.value,
-    });
+    if (title && description && status) {
+      this.handleCreate({
+        title: title.value,
+        description: description.value,
+        status: status.value,
+      });
+      this.props.toggleModal();
+    }
   };
 
   render() {
@@ -53,6 +56,7 @@ class BookFormModal extends React.Component {
                   type="text"
                   name="title"
                   style={{ marginTop: '5px', padding: '5px' }}
+                  required
                 />
               </Form.Group>
               <Form.Group
@@ -64,6 +68,7 @@ class BookFormModal extends React.Component {
                   type="text"
                   name="description"
                   style={{ marginTop: '5px', padding: '5px' }}
+                  required
                 />
               </Form.Group>
               <div className="d-flex flex-column mb-3">
@@ -75,17 +80,18 @@ class BookFormModal extends React.Component {
                     value="true"
                     label="True"
                     style={{ marginRight: '10px' }}
+                    required
                   />
                   <Form.Check
                     type="radio"
                     name="status"
                     value="false"
                     label="False"
+                    required
                   />
                 </div>
               </div>
               <Button
-                onClick={() => this.props.toggleModal()}
                 type="submit"
                 variant="primary"
                 style={{

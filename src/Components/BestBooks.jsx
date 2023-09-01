@@ -15,6 +15,7 @@ class BestBooks extends React.Component {
       preview: false,
       editPreview: false,
       editBook: null,
+      editMessage: false,
     };
   }
 
@@ -54,6 +55,7 @@ class BestBooks extends React.Component {
         }
       }),
     });
+    this.toggleEditModal;
   };
 
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
@@ -74,9 +76,9 @@ class BestBooks extends React.Component {
   handleEditModal = (book) => {
     console.log(book);
     console.log(this.state.editBook);
-    this.setState({ 
+    this.setState({
       editPreview: !this.state.editPreview,
-      editBook: book
+      editBook: book,
     });
   };
 
