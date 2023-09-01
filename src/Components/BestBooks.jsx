@@ -18,6 +18,7 @@ class BestBooks extends React.Component {
       editBook: null,
       editMessage: false,
       token: null,
+      // user: null,
     };
   }
 
@@ -71,9 +72,13 @@ class BestBooks extends React.Component {
   // this is a lifecycle method, any code put here will occur automatically when the component "mounts" the DOM.
   async componentDidMount() {
     let res = await this.props.auth0.getIdTokenClaims();
+    console.log(res);
     const token = res.__raw;
+    const user = res;
     console.log('OUR WEB TOKEN', token);
-    this.setState({ token }, () => this.fetchAllBooks());
+    console.log('OUR WEB USER', user);
+    this.setState({ token: token }, () => this.fetchAllBooks());
+    this.props.handleProfilePage(res);
   }
 
   handleDelete = async (id) => {
@@ -86,7 +91,7 @@ class BestBooks extends React.Component {
       baseURL: 'http://localhost:3001/',
       url: `/books/${id}`,
     };
-    axios(config); 
+    axios(config);
     this.setState({
       books: this.state.books.filter((books) => {
         console.log(books._id);
