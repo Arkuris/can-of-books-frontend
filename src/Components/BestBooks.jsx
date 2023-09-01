@@ -34,7 +34,6 @@ class BestBooks extends React.Component {
     };
     axios(config).then((response) => {
       this.setState({ books: response.data });
-      console.log(response.data);
     });
   };
 
